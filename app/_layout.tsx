@@ -4,21 +4,32 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  initialRouteName: 'splash',
 };
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    <AuthProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+        <Stack.Screen name="splash" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="cac" options={{ headerShown: false }} />
+        <Stack.Screen name="cbc" options={{ headerShown: false }} />
+        <Stack.Screen name="detail" options={{ headerShown: false }} />
+        <Stack.Screen name="form-kunjungan" options={{ headerShown: false }} />
+        <Stack.Screen name="simulasi" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

@@ -1,0 +1,206 @@
+import { View, Text, StyleSheet, ScrollView, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+
+const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
+
+export default function CACScreen() {
+  const router = useRouter();
+
+  // Data dummy untuk tabel
+  const bankData = [
+    { nama: 'BANK A', alamat: 'X', product: 'X', angsuran: 'X', shs: 'X' },
+    { nama: 'BANK B', alamat: 'X', product: 'X', angsuran: 'X', shs: 'X' },
+    { nama: 'BANK C', alamat: 'X', product: 'X', angsuran: 'X', shs: 'X' },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Header with Logo and Back Button */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={SCREEN_HEIGHT * 0.03} color="#1E3A8A" />
+        </TouchableOpacity>
+        <View style={styles.logoContainer}>
+          <Text style={styles.logoTextSubro}>SUBRO</Text>
+          <Text style={styles.logoTextGo}>GO</Text>
+        </View>
+      </View>
+
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* CAC Title Box */}
+        <View style={styles.cacBox}>
+          <Text style={styles.cacText}>cac</Text>
+        </View>
+
+        {/* Information Mitra Link */}
+        <Text style={styles.infoLink}>Information Mitra {'>>'}</Text>
+
+        {/* Table Header */}
+        <View style={styles.tableContainer}>
+          <View style={styles.tableHeader}>
+            <View style={styles.headerCell}>
+              <Text style={styles.headerText}>Nama</Text>
+            </View>
+            <View style={styles.headerCell}>
+              <Text style={styles.headerText}>Alamat</Text>
+            </View>
+            <View style={styles.headerCell}>
+              <Text style={styles.headerText}>product</Text>
+            </View>
+            <View style={styles.headerCell}>
+              <Text style={styles.headerText}>Angsu{'\n'}ran</Text>
+            </View>
+            <View style={styles.headerCell}>
+              <Text style={styles.headerText}>SHS</Text>
+            </View>
+          </View>
+
+          {/* Table Rows */}
+          {bankData.map((bank, index) => (
+            <View key={index} style={styles.tableRow}>
+              <TouchableOpacity
+                style={styles.cell}
+                onPress={() => router.push({
+                  pathname: '/detail',
+                  params: { name: bank.nama, type: 'cac' }
+                })}
+              >
+                <Text style={styles.cellText}>{bank.nama}</Text>
+              </TouchableOpacity>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>{bank.alamat}</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>{bank.product}</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>{bank.angsuran}</Text>
+              </View>
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>{bank.shs}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    paddingTop: SCREEN_HEIGHT * 0.02,
+    paddingHorizontal: SCREEN_WIDTH * 0.05,
+    paddingBottom: SCREEN_HEIGHT * 0.02,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  backButton: {
+    padding: SCREEN_WIDTH * 0.02,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoTextSubro: {
+    fontSize: SCREEN_HEIGHT * 0.03,
+    fontWeight: 'bold',
+    color: '#1E3A8A',
+    letterSpacing: 1,
+  },
+  logoTextGo: {
+    fontSize: SCREEN_HEIGHT * 0.03,
+    fontWeight: 'bold',
+    color: '#3B82F6',
+    letterSpacing: 1,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: SCREEN_WIDTH * 0.05,
+  },
+  cacBox: {
+    backgroundColor: '#3B82F6',
+    paddingVertical: SCREEN_HEIGHT * 0.012,
+    paddingHorizontal: SCREEN_WIDTH * 0.06,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+    marginBottom: SCREEN_HEIGHT * 0.02,
+    shadowColor: '#3B82F6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cacText: {
+    color: '#FFFFFF',
+    fontSize: SCREEN_HEIGHT * 0.025,
+    fontWeight: '600',
+  },
+  infoLink: {
+    color: '#1E3A8A',
+    fontSize: SCREEN_HEIGHT * 0.018,
+    fontWeight: '500',
+    marginBottom: SCREEN_HEIGHT * 0.025,
+  },
+  tableContainer: {
+    marginBottom: SCREEN_HEIGHT * 0.03,
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    marginBottom: SCREEN_HEIGHT * 0.01,
+  },
+  headerCell: {
+    flex: 1,
+    backgroundColor: '#1E3A8A',
+    paddingVertical: SCREEN_HEIGHT * 0.015,
+    paddingHorizontal: SCREEN_WIDTH * 0.01,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 3,
+    borderRadius: 8,
+    minHeight: SCREEN_HEIGHT * 0.06,
+    shadowColor: '#1E3A8A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  headerText: {
+    color: '#FFFFFF',
+    fontSize: SCREEN_HEIGHT * 0.014,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    marginBottom: SCREEN_HEIGHT * 0.01,
+  },
+  cell: {
+    flex: 1,
+    backgroundColor: '#DBEAFE',
+    paddingVertical: SCREEN_HEIGHT * 0.015,
+    paddingHorizontal: SCREEN_WIDTH * 0.01,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 3,
+    borderRadius: 8,
+    minHeight: SCREEN_HEIGHT * 0.05,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  cellText: {
+    color: '#1E3A8A',
+    fontSize: SCREEN_HEIGHT * 0.016,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+});
